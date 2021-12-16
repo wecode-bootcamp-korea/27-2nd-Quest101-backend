@@ -62,4 +62,4 @@ class KakaoLoginTest(TestCase):
         access_token = response.json()['access_token']
         
         self.assertEqual(response.json(),{'message':'SUCCESS','access_token': access_token})
-        self.assertEqual(response.status_code, 200 | 201) 
+        self.assertEqual(response.status_code, 200 | 201)

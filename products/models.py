@@ -50,7 +50,7 @@ class Stat(models.Model):
 class CourseStat(models.Model):
     course              = models.ForeignKey('Course',on_delete=models.CASCADE)
     stat                = models.ForeignKey('Stat',on_delete=models.CASCADE)
-    score                = models.IntegerField(default=0)
+    score               = models.IntegerField(default=0)
 
     class Meta:
         db_table        = 'course_stats'
