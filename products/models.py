@@ -15,6 +15,7 @@ class Course(TimeStampModel):
     user                = models.ForeignKey('users.User',on_delete=models.CASCADE)
     sub_category        = models.ForeignKey('SubCategory',on_delete=models.CASCADE)
     level               = models.ForeignKey('Level', on_delete=models.CASCADE)
+    discount_rate       = models.IntegerField(null=True)
     
     class Meta:
         db_table        = 'courses'
@@ -50,7 +51,7 @@ class Stat(models.Model):
 class CourseStat(models.Model):
     course              = models.ForeignKey('Course',on_delete=models.CASCADE)
     stat                = models.ForeignKey('Stat',on_delete=models.CASCADE)
-    score                = models.IntegerField(default=0)
+    score               = models.IntegerField(default=0)
 
     class Meta:
         db_table        = 'course_stats'
@@ -85,4 +86,4 @@ class SubCategory(models.Model):
     category            = models.ForeignKey('Category',on_delete=models.CASCADE)
     
     class Meta:
-        db_table        = 'sub_categories'
+        db_table        = 'sub_categories'     
