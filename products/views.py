@@ -4,22 +4,9 @@ from django.http          import JsonResponse
 from django.views         import View
 from django.db.utils      import IntegrityError
 
-from products.models      import Comment, Course
+from products.models      import Comment, Course, CourseStat
 from core.utils           import Authorize
-from users.models         import UserCourse
-
-class OrderView(View):
-    @Authorize
-    def post(self,request,course_id):
-        try:
-            user, is_user = UserCourse.objects.get_or_create(user_id=request.user.id, course_id=course_id)
-        
-            if not is_user:
-                return JsonResponse({"message" : "USER ALREADY EXISTS"}, status=401)
-            return JsonResponse({"message": "SUCCESS"}, status=200)       
-
-        except IntegrityError : 
-            return JsonResponse({"message" : "INVALID_VALUE"}, status=400)
+from users.models         import UserCourse, UserCourseStat
 
 class CommentView(View):
     @Authorize
@@ -72,3 +59,19 @@ class CommentView(View):
 
         except Comment.DoesNotExist:
             return JsonResponse({'message':'INVAILD_COMMENT'},status=401)
+
+
+class OrderView(View):
+    @Authorize
+    def post(self,request,course_id):
+        try:
+            course_stat_id = CourseStat.objects.get(course_id=course_id).id
+            user, created = UserCourseStat.objects.get_or_create(user_id=request.user.id, course_stat_id=course_stat_id)
+
+            if not created:
+                return JsonResponse({"message" : "USER ALREADY EXISTS"}, status=401)
+            return JsonResponse({"message": "SUCCESS"}, status=200)       
+        
+        except CourseStat.DoesNotExist :
+            return JsonResponse({"message" : "INVAILD_COURSE_STAT"}, status=401)
+
