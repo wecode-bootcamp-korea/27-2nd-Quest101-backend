@@ -6,7 +6,7 @@ from users.models  import User
 
 class KakaoLoginTest(TestCase):
     def setUp(self):
-        user = User.objects.create(
+        User.objects.create(
             kakao_id      = "01924234",
             name          = "박정현",
             email         = "hailey@gmail.com",
@@ -60,6 +60,6 @@ class KakaoLoginTest(TestCase):
         response = client.get("/users/kakaosignin", **headers)
         
         access_token = response.json()['access_token']
-        
+        print(response)
         self.assertEqual(response.json(),{'message':'SUCCESS','access_token': access_token})
         self.assertEqual(response.status_code, 200 | 201) 
