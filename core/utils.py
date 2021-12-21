@@ -9,7 +9,6 @@ def Authorize(func):
     def wrapper(self, request, *args, **kwargs):
         try:
             token = request.headers.get('Authorization')
-
             if not token:
                 return JsonResponse({'message' : 'TOKEN_REQUIRED'}, status=401)
 
