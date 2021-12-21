@@ -1,6 +1,7 @@
 from django.urls import path
-from products.views import  CommentView
+
+from .views import OrderView
 
 urlpatterns = [
-    path('/comments/<int:course_id>', CommentView.as_view())
+    path('/order/<int:course_id>', OrderView.as_view())
 ]
